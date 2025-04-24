@@ -1,2 +1,13 @@
-spendings.xls
+venv/
+.idea
+.code
+__pycache__/
 .env
+.pytest_cache/
+env/
+.DS_Store
+api_env
+.github
+node_modules
+/graphile/src/package-lock.json
+.xls

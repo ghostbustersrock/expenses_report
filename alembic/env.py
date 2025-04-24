@@ -20,8 +20,8 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from expenses_report import models
-from core.db.database import Base
+from backend import models
+from backend.database import Base
 
 
 target_metadata = [Base.metadata]

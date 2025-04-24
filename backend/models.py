@@ -1,4 +1,4 @@
-from core.db.database import Base
+from backend.database import Base
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, INTEGER, TEXT, DATE, NUMERIC, ForeignKey
 from sqlalchemy.orm import relationship
