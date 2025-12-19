@@ -33,18 +33,31 @@
     border-radius: 10px;
     color: black;
     cursor: pointer;
+    width: 100px;
+}
+
+.label-field {
+    font-size: 14px;
 }
 
 .input-field-container-other {
     padding-bottom: 10px;
 }
 
-.submit-expenses-button-container {
+.submit-cancel-expenses-button-container {
     display: flex;
+    justify-content: space-between;
+}
 
-    button {
-        width: 100%;
-    }
+.submit-button-container,
+.cancel-button-container {
+    width: 100%;
+}
+
+.reset-button {
+    background-color: red;
+    border-color: red;
+    width: 100%;
 }
 
 .radio-wrapper {
@@ -88,8 +101,4 @@
     display: flex;
     justify-content: center;
     gap: 40px;
-}
-
-.operation-text {
-    margin-top: 1rem;
 }

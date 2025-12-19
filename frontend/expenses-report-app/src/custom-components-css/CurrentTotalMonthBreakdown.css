@@ -1,0 +1,154 @@
+.monthly-spendings-breakdown-component {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.expenses-table-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    min-width: 200px;
+    max-width: 200px;
+}
+
+.expense-info-container {
+    display: flex;
+    gap: 5px;
+}
+
+.expense-info {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: flex-start;
+}
+
+.break-line {
+    margin: 5px 0;
+    width: 100%;
+}
+
+.grid-break-line {
+    border: 1px solid gray;
+    background: gray;
+    height: 300px;
+    margin: 0;
+    width: 1px;
+    border-radius: 5px;
+    opacity: 0.1;
+}
+
+.money-saved-calculator-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.salary-input-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.money-saved-info {
+    display: flex;
+    flex-direction: column;
+    align-items: self-start;
+    width: 150px;
+}
+
+.info-wrapper {
+    display: flex;
+    position: relative;
+    padding-left: 10px;
+}
+
+.info-tag {
+    display: block;
+    font-size: 8px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.info-wrapper:hover .info-box {
+    display: flex;
+    width: 120px;
+    height: 60px;
+    text-wrap: auto;
+    font-size: 10px;
+}
+
+.info-box {
+    display: none;
+    position: absolute;
+    bottom: 200%;
+    left: -45px;
+    background: #333;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.calculation-info {
+    font-size: 8px;
+    color: gray;
+}
+
+.monthly-salary-input {
+    margin-left: 5px;
+    background: unset;
+    border: 2px solid black;
+    border: unset;
+    border-bottom: 1px solid;
+    color: black;
+    cursor: pointer;
+    width: 65px;
+}
+
+.money-saved-line-break {
+    width: 120px;
+    margin: 0;
+}
+
+.total-spent-money {
+    padding-top: 5px;
+}
+
+.money-saved-container {
+    font-weight: bold;
+    padding-top: 20px;
+}
+
+.pound-sterling {
+    display: none;
+    color: black
+}
+
+.money-saved {
+    display: inline;
+    color: green;
+}
+
+.money-not-saved {
+    display: inline;
+    color: red;
+}
+
+.hide-negative-sign {
+    display: none;
+}
+
+.show-negative-sign {
+    display: inline-block;
+    color: red;
+    padding-right: 2px;
+}

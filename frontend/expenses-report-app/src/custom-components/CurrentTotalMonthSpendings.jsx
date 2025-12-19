@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api";
 
-function CurrentSpendings() {
+import CurrentTotalMonthBreakdown from "./CurrentTotalMonthBreakdown"
+
+function CurrentTotalMonthSpendings() {
 
     const [spendings, setSpendings] = useState(null)
 
@@ -24,13 +26,17 @@ function CurrentSpendings() {
     return (
         <div className="current-spendings-container">
             <h2 className="current-spendings-header">
-                Current {currentMonth} spendings
+                {currentMonth} spendings
             </h2>
             <span className="current-spendings-value">
-                £{spendings !== null ? spendings : "Loading..."}
+                Total spendings: £{spendings !== null ? spendings : "Loading..."}
             </span>
+            <div className="line-break-total-spendings-container">
+                <hr className="line-break-total-spendings" />
+            </div>
+            <CurrentTotalMonthBreakdown totalSpendings={spendings} />
         </div>
     )
 }
 
-export default CurrentSpendings;
+export default CurrentTotalMonthSpendings;

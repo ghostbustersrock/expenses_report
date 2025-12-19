@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CustomButton from "./CustomButton";
 import api from "../api"
 
@@ -29,12 +29,24 @@ function InputExpenses() {
     }
 
     const handleSubmit = async () => {
+
+        if (operation === "") {
+            alert("Please select an operation (ADD or REMOVE) before submitting expenses.")
+            return
+        }
+
+        const allExpensesEmpty = Object.values(expenses).every(v => v === "")
+
+        if (allExpensesEmpty) {
+            alert("You have to submit at least one expense before submitting the form.")
+            return
+
+        }
+
         try {
             const cleanedExpenses = Object.fromEntries(
                 Object.entries(expenses).map(([key, value]) => [key, value === "" ? null : Number(value)])
             );
-
-            // cleanedExpenses["operation"] = operation
 
             const response = await api.post(`/submit-expenses?operation=${operation}`, cleanedExpenses)
 
@@ -43,6 +55,24 @@ function InputExpenses() {
         } catch (error) {
             alert(`Submission error: ${error}`)
         }
+    }
+
+    const handleCancel = () => {
+        setExpenses({
+            rent: "",
+            bills: "",
+            transportation: "",
+            subscriptions: "",
+            groceries: "",
+            shopping: "",
+            eatingOut: "",
+            leisure: "",
+            drinks: "",
+            holidays: "",
+            other: "",
+        })
+
+        setOperation("")
     }
 
     return (
@@ -58,9 +88,6 @@ function InputExpenses() {
                 </p>
             </div>
             <div className="operation-container">
-                <div className="operation-header">
-                    <p className="operation-text"><b>Operation</b></p>
-                </div>
                 <div className="operation-selection-container">
                     <label className="radio-wrapper">
                         <input type="radio" name="operation" value="add" className="radio-input" checked={operation === "add"} onChange={handleOperationChange} />
@@ -93,8 +120,15 @@ function InputExpenses() {
                 </label>
                 <input id="other" className="input-field" type="number" value={expenses.other ?? ""} onChange={(e) => handleChange(e, "other")} />
             </div>
-            <div className="submit-expenses-button-container" onClick={handleSubmit}>
-                <CustomButton buttonText="Submit expenses" />
+            <div className="submit-cancel-expenses-button-container">
+                <div className="submit-button-container" onClick={handleSubmit}>
+                    <CustomButton buttonText="Submit expenses" secondaryClass="" />
+                </div>
+                {Object.values(expenses).some(value => value !== null && value !== "") && operation !== "" && (
+                    <div className="cancel-button-container" onClick={handleCancel}>
+                        <CustomButton buttonText="Reset" secondaryClass="reset-button" />
+                    </div>
+                )}
             </div>
         </div >
     )

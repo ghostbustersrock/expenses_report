@@ -1,8 +1,6 @@
-import React from "react";
-
-function CustomButton({ buttonText }) {
+function CustomButton({ buttonText, secondaryClass }) {
     return (
-        <button className="app-button">
+        <button className={`app-button ${secondaryClass}`}>
             {buttonText}
         </button>
     )
