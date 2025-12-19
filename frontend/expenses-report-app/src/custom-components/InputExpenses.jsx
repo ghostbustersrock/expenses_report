@@ -51,6 +51,7 @@ function InputExpenses() {
             const response = await api.post(`/submit-expenses?operation=${operation}`, cleanedExpenses)
 
             alert(response.data["message"])
+            return
 
         } catch (error) {
             alert(`Submission error: ${error}`)

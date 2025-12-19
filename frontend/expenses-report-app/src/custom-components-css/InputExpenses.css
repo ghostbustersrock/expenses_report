@@ -47,6 +47,7 @@
 .submit-cancel-expenses-button-container {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .submit-button-container,
@@ -57,7 +58,6 @@
 .reset-button {
     background-color: red;
     border-color: red;
-    width: 100%;
 }
 
 .radio-wrapper {

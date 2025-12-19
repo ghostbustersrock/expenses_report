@@ -116,3 +116,4 @@ async def current_month_expenses_breakdown(db: Session = Depends(get_db)):
 # TODO: upon hitting the submit button and passing the alert()
 # the components need to refresh on their own so that we get the latest
 # data, rather than having to refresh the page manually!
+# InputExpenses needs to refresh the CurrentTotalMonthSpendings component
