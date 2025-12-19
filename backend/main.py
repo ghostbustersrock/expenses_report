@@ -109,3 +109,10 @@ async def current_month_expenses_breakdown(db: Session = Depends(get_db)):
 # so any operations we do take place on the currently selected month.
 # This is in the eventuality that we need to modify a past month. The default
 # month is the current one we are in, if nothing is selected.
+
+# TODO: add logic in utils.py to save any new input (update, delete, etc.)
+# to a logger table so that it can be displayed in the frontend!
+
+# TODO: upon hitting the submit button and passing the alert()
+# the components need to refresh on their own so that we get the latest
+# data, rather than having to refresh the page manually!
