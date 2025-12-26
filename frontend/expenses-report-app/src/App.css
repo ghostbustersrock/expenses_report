@@ -1,6 +1,6 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 2rem;
   text-align: center;
 }
@@ -10,16 +10,26 @@
 }
 
 .main-content-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-}
-
-.greeting-counter-container {
   display: flex;
   flex-direction: column;
+  gap: 30px;
+}
+
+.date-selection-container {
+  display: flex;
+  font-size: 30px;
+}
+
+.date-selection-dropdown {
+  background: unset;
+  color: black;
+  border: unset;
+  border-bottom: 1px solid;
+}
+
+.operations-summary-containers {
+  display: flex;
   align-items: center;
-  max-width: 500px;
   border: 1px solid rgba(169, 169, 169, 0.3);
   border-radius: 10px;
   padding: 30px;
@@ -28,4 +38,12 @@
 .app-button {
   font-size: 14px;
   width: 100%;
+}
+
+.content-separator {
+  margin: 0 20px;
+  width: 1px;
+  height: 500px;
+  background: gray;
+  opacity: 0.3;
 }

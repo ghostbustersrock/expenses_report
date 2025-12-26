@@ -16,6 +16,7 @@ from utils import (
     currently_available_expense_categories,
     get_current_month_expenses_breakdown,
     get_current_month_total_spendings,
+    get_spendings_dates,
     save_category_expense_available_on_db,
     save_category_expense_not_available_on_db,
 )
@@ -82,7 +83,7 @@ async def submit_expenses(
     return {"message": msg}
 
 
-@app.get("/spendings/current-month")
+@app.get("/total-spendings/current-month")
 async def homepage(request: Request, db: Session = Depends(get_db)):
 
     total_month_expense = get_current_month_total_spendings(db=db)
@@ -93,13 +94,16 @@ async def homepage(request: Request, db: Session = Depends(get_db)):
 @app.get("/current-month-expenses-breakdown")
 async def current_month_expenses_breakdown(db: Session = Depends(get_db)):
 
-    today_date = datetime.datetime.now()
-
-    expenses_breakdown = get_current_month_expenses_breakdown(
-        db=db, today_date=today_date
-    )
+    expenses_breakdown = get_current_month_expenses_breakdown(db=db)
 
     return expenses_breakdown
+
+
+@app.get("/get-spendings-dates")
+async def spendings_dates(db: Session = Depends(get_db)):
+    unique_spendings_dates = get_spendings_dates(db=db)
+
+    return unique_spendings_dates
 
 
 # TODO: endpoint to delete all current inputs for the month
@@ -112,8 +116,3 @@ async def current_month_expenses_breakdown(db: Session = Depends(get_db)):
 
 # TODO: add logic in utils.py to save any new input (update, delete, etc.)
 # to a logger table so that it can be displayed in the frontend!
-
-# TODO: upon hitting the submit button and passing the alert()
-# the components need to refresh on their own so that we get the latest
-# data, rather than having to refresh the page manually!
-# InputExpenses needs to refresh the CurrentTotalMonthSpendings component

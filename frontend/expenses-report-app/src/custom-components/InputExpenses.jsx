@@ -2,7 +2,7 @@ import { useState } from "react";
 import CustomButton from "./CustomButton";
 import api from "../api"
 
-function InputExpenses() {
+function InputExpenses({ onLoggedExpenses }) {
 
     const [expenses, setExpenses] = useState({
         rent: "",
@@ -51,6 +51,10 @@ function InputExpenses() {
             const response = await api.post(`/submit-expenses?operation=${operation}`, cleanedExpenses)
 
             alert(response.data["message"])
+
+            // Needed to refresh the `MonthlyBreakdown` component
+            onLoggedExpenses?.()
+
             return
 
         } catch (error) {
@@ -78,16 +82,6 @@ function InputExpenses() {
 
     return (
         <div className="input-expenses-container">
-            <div className="input-expenses-title-container">
-                <p>
-                    Add or Remove Expenses
-                </p>
-            </div>
-            <div className="input-expenses-header-container">
-                <p>
-                    Enter your expense and specify whether to add or remove them.
-                </p>
-            </div>
             <div className="operation-container">
                 <div className="operation-selection-container">
                     <label className="radio-wrapper">

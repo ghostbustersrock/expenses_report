@@ -2,13 +2,14 @@ import datetime
 import models as md
 
 from constants import *
-from sqlalchemy import and_, func
+from sqlalchemy import and_, cast, desc, func, select
 from sqlalchemy.orm import Session
+from sqlalchemy.types import Date
 
 
 def get_current_month_and_year():
     today_date = datetime.datetime.now()
-    current_month = CALENDAR_MONTHS[today_date.month]
+    current_month = today_date.month
     current_year = today_date.year
 
     return current_month, current_year
@@ -123,10 +124,9 @@ def save_category_expense_available_on_db(
     db.commit()
 
 
-def get_current_month_expenses_breakdown(db: Session, today_date: datetime) -> dict:
+def get_current_month_expenses_breakdown(db: Session) -> dict:
 
-    current_month = CALENDAR_MONTHS[today_date.month]
-    current_year = today_date.year
+    current_month, current_year = get_current_month_and_year()
 
     expense_query = (
         db.query(
@@ -179,3 +179,45 @@ def get_current_month_total_spendings(db: Session) -> float | None:
         total_month_expenses = 0
 
     return total_month_expenses
+
+
+def get_spendings_dates(db: Session) -> list[dict] | None:
+    stmt = (
+        select(
+            func.to_char(
+                func.date_trunc(
+                    "month",
+                    cast(
+                        func.concat(
+                            md.Expenses.expense_year,
+                            "-",
+                            md.Expenses.expense_month,
+                            "-01",
+                        ),
+                        Date,
+                    ),
+                ),
+                "FMMonth YYYY",
+            ).label("label"),
+            md.Expenses.expense_year,
+            md.Expenses.expense_month,
+        )
+        .distinct()
+        .order_by(desc(md.Expenses.expense_year), desc(md.Expenses.expense_month))
+    )
+
+    rows = db.execute(stmt).all()
+
+    results = []
+
+    if rows:
+        for label, year, month in rows:
+            results.append(
+                {
+                    "label": label,
+                    "year": int(year),
+                    "month": int(month),
+                }
+            )
+
+    return results if results else None

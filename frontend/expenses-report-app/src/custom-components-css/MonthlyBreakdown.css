@@ -30,13 +30,12 @@
 }
 
 .grid-break-line {
-    border: 1px solid gray;
     background: gray;
     height: 300px;
-    margin: 0;
+    margin: 0 10px;
     width: 1px;
     border-radius: 5px;
-    opacity: 0.1;
+    opacity: 0.3;
 }
 
 .money-saved-calculator-container {

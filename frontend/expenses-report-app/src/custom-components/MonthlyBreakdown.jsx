@@ -1,14 +1,14 @@
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useState } from "react"
 import api from "../api"
 
 
-function CurrentTotalMonthBreakdown({ totalSpendings }) {
+function MonthlyBreakdown({ refreshTrigger }) {
 
     const [data, setData] = useState(null)
-    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-
+    const [loading, setLoading] = useState(true)
     const [monthlySalary, setMonthlySalary] = useState(null)
+    const [totalSpendings, setTotalSpendings] = useState(null)
 
     useEffect(() => {
         const fetchExpensesBreakdown = async () => {
@@ -25,7 +25,21 @@ function CurrentTotalMonthBreakdown({ totalSpendings }) {
 
         fetchExpensesBreakdown()
 
-    }, [])
+    }, [refreshTrigger])
+
+    useEffect(() => {
+        const fetchSpendings = async () => {
+            try {
+                const response = await api.get("/total-spendings/current-month")
+                setTotalSpendings(response.data.total_spent)
+            } catch (error) {
+                alert("Error fetching spendings:", error)
+                // setTotalSpendings("Error")
+            }
+        }
+
+        fetchSpendings()
+    }, [refreshTrigger])
 
 
     const savedAmount = monthlySalary == null ? null : Number(monthlySalary) - totalSpendings
@@ -98,4 +112,4 @@ function CurrentTotalMonthBreakdown({ totalSpendings }) {
     )
 }
 
-export default CurrentTotalMonthBreakdown
+export default MonthlyBreakdown

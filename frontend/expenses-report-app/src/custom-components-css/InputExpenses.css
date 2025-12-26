@@ -1,24 +1,16 @@
 .input-expenses-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 450px;
     gap: 10px;
-}
-
-.input-expenses-title-container {
-    font-size: 32px;
-    font-weight: bold;
-}
-
-.input-expenses-header-container {
-    color: grey;
+    align-items: center;
 }
 
 .inputs-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 10px;
-    width: 100%;
+    width: 50%;
 }
 
 .input-field-container {
@@ -46,13 +38,14 @@
 
 .submit-cancel-expenses-button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    width: 75%;
     gap: 20px;
 }
 
 .submit-button-container,
 .cancel-button-container {
-    width: 100%;
+    width: 150px;
 }
 
 .reset-button {

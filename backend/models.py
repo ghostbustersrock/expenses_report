@@ -11,11 +11,9 @@ class Expenses(Base):
     expense_category_id = Column(
         INTEGER, ForeignKey("expenses_categories.category_id"), nullable=False
     )
-    expense_month = Column(TEXT, nullable=False)
+    expense_month = Column(NUMERIC, nullable=False)
     expense_year = Column(NUMERIC, nullable=False)
     expense_cost = Column(NUMERIC, nullable=False)
-
-    expense_category = relationship("ExpensesCategories", back_populates="expenses")
 
 
 class ExpensesCategories(Base):
@@ -23,5 +21,3 @@ class ExpensesCategories(Base):
 
     category_id = Column(INTEGER, primary_key=True, index=True)
     category_type = Column(TEXT, nullable=False)
-
-    expenses = relationship("Expenses", back_populates="expense_category")
