@@ -25,11 +25,11 @@
   color: black;
   border: unset;
   border-bottom: 1px solid;
+  cursor: pointer;
 }
 
 .operations-summary-containers {
   display: flex;
-  align-items: center;
   border: 1px solid rgba(169, 169, 169, 0.3);
   border-radius: 10px;
   padding: 30px;

@@ -1,6 +1,18 @@
 .monthly-spendings-breakdown-component {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+}
+
+.total-spendings-header-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.expenses-breakdown-calculation-container {
+    display: flex;
     align-items: center;
 }
 

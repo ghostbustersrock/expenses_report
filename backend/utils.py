@@ -63,7 +63,7 @@ def currently_available_expense_categories(db: Session, expenses):
 
 def save_category_expense_not_available_on_db(
     db: Session, expenses: list[dict], operation: str
-):
+) -> list:
 
     current_month, current_year = get_current_month_and_year()
 
@@ -85,6 +85,16 @@ def save_category_expense_not_available_on_db(
                     ],
                 )
             )
+
+            db.add(
+                md.ExpensesLogs(
+                    expense_type="ADDED",
+                    expense_amount=expense_cost,
+                    expense_category=expense_category.replace("_", " ").title(),
+                    date_of_entry=datetime.date.today(),
+                )
+            )
+
             db.flush()
 
         else:
@@ -118,6 +128,15 @@ def save_category_expense_available_on_db(
                 db.delete(existing_expense)
             else:
                 existing_expense.expense_cost = removal_transaction
+
+        db.add(
+            md.ExpensesLogs(
+                expense_type="ADDED" if operation == "add" else "REMOVED",
+                expense_amount=expense_cost,
+                expense_category=expense_category.replace("_", " ").title(),
+                date_of_entry=datetime.date.today(),
+            )
+        )
 
         db.flush()
 
@@ -221,3 +240,25 @@ def get_spendings_dates(db: Session) -> list[dict] | None:
             )
 
     return results if results else None
+
+
+def get_month_logs(db: Session) -> list[dict] | None:
+    logs_rows = db.query(md.ExpensesLogs).order_by(desc(md.ExpensesLogs.id)).all()
+
+    print(f"{logs_rows=}")
+
+    logs = []
+
+    if logs_rows:
+        for log in logs_rows:
+            logs.append(
+                {
+                    "id": log.id,
+                    "date": log.date_of_entry,
+                    "type": log.expense_type,
+                    "amount": log.expense_amount,
+                    "category": log.expense_category,
+                }
+            )
+
+    return logs

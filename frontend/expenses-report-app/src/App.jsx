@@ -1,7 +1,5 @@
 import api from "./api"
 import React, { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 // Components imports ----------------------------------------
@@ -10,6 +8,7 @@ import InputExpenses from "./custom-components/InputExpenses"
 import MonthlyBreakdown from "./custom-components/MonthlyBreakdown"
 
 // Components CSS imports --------------------------------------
+import "./custom-components-css/ExpensesLogs.css"
 import "./custom-components-css/InputExpenses.css"
 import "./custom-components-css/MonthlyBreakdown.css"
 
@@ -70,7 +69,6 @@ function App() {
             ) : (
               "Loading dates..."
             )}
-            {" "}spendings
           </span>
         </div>
         <div className="operations-summary-containers">
@@ -82,9 +80,9 @@ function App() {
           } */}
           <InputExpenses onLoggedExpenses={() => setRefreshMonthSpendings(prev => prev + 1)} />
           <hr className="content-separator" />
-          <MonthlyBreakdown refreshTrigger={refreshMonthSpendings} />
+          <MonthlyBreakdown selectedDate={selectedDate} refreshTrigger={refreshMonthSpendings} />
           <hr className="content-separator" />
-          <ExpensesLogs refreshTrigger={refreshMonthSpendings} />
+          <ExpensesLogs selectedDate={selectedDate} refreshTrigger={refreshMonthSpendings} />
         </div>
       </div >
     </>

@@ -16,6 +16,7 @@ from utils import (
     currently_available_expense_categories,
     get_current_month_expenses_breakdown,
     get_current_month_total_spendings,
+    get_month_logs,
     get_spendings_dates,
     save_category_expense_available_on_db,
     save_category_expense_not_available_on_db,
@@ -35,13 +36,6 @@ app.add_middleware(
 
 path = os.path.abspath(os.path.expanduser("./app/templates"))
 templates = Jinja2Templates(directory=path)
-
-
-@app.get("/")
-async def homepage(request: Request, db: Session = Depends(get_db)):
-    expenses = db.query(md.ExpensesCategories).all()
-
-    return {"status": "SUCCESS"}
 
 
 @app.post("/submit-expenses")
@@ -106,6 +100,13 @@ async def spendings_dates(db: Session = Depends(get_db)):
     return unique_spendings_dates
 
 
+@app.get("/get-logs")
+async def get_logs(db: Session = Depends(get_db)):
+    logs = get_month_logs(db=db)
+
+    return logs
+
+
 # TODO: endpoint to delete all current inputs for the month
 
 # TODO: later on introduce a feature where when selecting a specific
@@ -113,6 +114,3 @@ async def spendings_dates(db: Session = Depends(get_db)):
 # so any operations we do take place on the currently selected month.
 # This is in the eventuality that we need to modify a past month. The default
 # month is the current one we are in, if nothing is selected.
-
-# TODO: add logic in utils.py to save any new input (update, delete, etc.)
-# to a logger table so that it can be displayed in the frontend!
