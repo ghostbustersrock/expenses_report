@@ -27,7 +27,9 @@ def upgrade() -> None:
         sa.Column("expense_type", sa.TEXT(), nullable=False),
         sa.Column("expense_amount", sa.NUMERIC(), nullable=False),
         sa.Column("expense_category", sa.TEXT(), nullable=False),
-        sa.Column("date_of_entry", sa.DATE(), nullable=False),
+        sa.Column("day_of_entry", sa.NUMERIC(), nullable=False),
+        sa.Column("month_of_entry", sa.NUMERIC(), nullable=False),
+        sa.Column("year_of_entry", sa.NUMERIC(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_expenses_logs_id"), "expenses_logs", ["id"], unique=False)

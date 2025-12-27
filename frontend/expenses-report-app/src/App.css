@@ -28,11 +28,22 @@
   cursor: pointer;
 }
 
-.operations-summary-containers {
+.show-input-expenses-container {
+  display: flex;
+}
+
+.operations-components-containers {
   display: flex;
   border: 1px solid rgba(169, 169, 169, 0.3);
   border-radius: 10px;
   padding: 30px;
+  min-height: 600px;
+  max-height: 600px;
+  align-items: center;
+}
+
+.expenses-summaries-components {
+  display: flex;
 }
 
 .app-button {

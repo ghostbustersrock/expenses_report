@@ -7,12 +7,14 @@ from sqlalchemy.orm import Session
 from sqlalchemy.types import Date
 
 
-def get_current_month_and_year():
+def get_todays_date():
+
     today_date = datetime.datetime.now()
+    current_day = today_date.day
     current_month = today_date.month
     current_year = today_date.year
 
-    return current_month, current_year
+    return current_day, current_month, current_year
 
 
 def create_expenses_submitted_summary(msg: str, expenses: list[dict]) -> str:
@@ -28,7 +30,7 @@ def create_expenses_submitted_summary(msg: str, expenses: list[dict]) -> str:
 
 def get_expense_from_db(db: Session, expense_category: str):
 
-    current_month, current_year = get_current_month_and_year()
+    _, current_month, current_year = get_todays_date()
 
     query_expense = (
         db.query(md.Expenses)
@@ -65,7 +67,7 @@ def save_category_expense_not_available_on_db(
     db: Session, expenses: list[dict], operation: str
 ) -> list:
 
-    current_month, current_year = get_current_month_and_year()
+    current_day, current_month, current_year = get_todays_date()
 
     expenses_not_saved = []
 
@@ -91,7 +93,9 @@ def save_category_expense_not_available_on_db(
                     expense_type="ADDED",
                     expense_amount=expense_cost,
                     expense_category=expense_category.replace("_", " ").title(),
-                    date_of_entry=datetime.date.today(),
+                    day_of_entry=current_day,
+                    month_of_entry=current_month,
+                    year_of_entry=current_year,
                 )
             )
 
@@ -108,6 +112,8 @@ def save_category_expense_not_available_on_db(
 def save_category_expense_available_on_db(
     db: Session, expenses: list[dict], operation: str
 ):
+
+    current_day, current_month, current_year = get_todays_date()
 
     for expense in expenses:
 
@@ -134,7 +140,9 @@ def save_category_expense_available_on_db(
                 expense_type="ADDED" if operation == "add" else "REMOVED",
                 expense_amount=expense_cost,
                 expense_category=expense_category.replace("_", " ").title(),
-                date_of_entry=datetime.date.today(),
+                day_of_entry=current_day,
+                month_of_entry=current_month,
+                year_of_entry=current_year,
             )
         )
 
@@ -143,9 +151,7 @@ def save_category_expense_available_on_db(
     db.commit()
 
 
-def get_current_month_expenses_breakdown(db: Session) -> dict:
-
-    current_month, current_year = get_current_month_and_year()
+def selected_date_expenses_breakdown(db: Session, month: int, year: int) -> dict:
 
     expense_query = (
         db.query(
@@ -157,8 +163,8 @@ def get_current_month_expenses_breakdown(db: Session) -> dict:
             md.Expenses,
             and_(
                 md.Expenses.expense_category_id == md.ExpensesCategories.category_id,
-                md.Expenses.expense_month == current_month,
-                md.Expenses.expense_year == current_year,
+                md.Expenses.expense_month == month,
+                md.Expenses.expense_year == year,
             ),
         )
         .group_by(
@@ -181,14 +187,12 @@ def get_current_month_expenses_breakdown(db: Session) -> dict:
     return expenses_breakdown
 
 
-def get_current_month_total_spendings(db: Session) -> float | None:
-
-    current_month, current_year = get_current_month_and_year()
+def selected_date_total_spendings(db: Session, month: int, year: int) -> float | None:
 
     total_month_expenses = (
         db.query(func.sum(md.Expenses.expense_cost)).filter(
-            md.Expenses.expense_month == current_month,
-            md.Expenses.expense_year == current_year,
+            md.Expenses.expense_month == month,
+            md.Expenses.expense_year == year,
         )
     ).first()[0]
 
@@ -242,10 +246,16 @@ def get_spendings_dates(db: Session) -> list[dict] | None:
     return results if results else None
 
 
-def get_month_logs(db: Session) -> list[dict] | None:
-    logs_rows = db.query(md.ExpensesLogs).order_by(desc(md.ExpensesLogs.id)).all()
-
-    print(f"{logs_rows=}")
+def logs_from_selected_date(db: Session, month: int, year: int) -> list[dict] | None:
+    logs_rows = (
+        db.query(md.ExpensesLogs)
+        .filter(
+            md.ExpensesLogs.month_of_entry == month,
+            md.ExpensesLogs.year_of_entry == year,
+        )
+        .order_by(desc(md.ExpensesLogs.id))
+        .all()
+    )
 
     logs = []
 
@@ -254,8 +264,10 @@ def get_month_logs(db: Session) -> list[dict] | None:
             logs.append(
                 {
                     "id": log.id,
-                    "date": log.date_of_entry,
-                    "type": log.expense_type,
+                    "day": log.day_of_entry,
+                    "month": log.month_of_entry,
+                    "year": log.year_of_entry,
+                    "operation": log.expense_type,
                     "amount": log.expense_amount,
                     "category": log.expense_category,
                 }

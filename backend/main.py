@@ -14,12 +14,12 @@ from schemas import Expenses
 from utils import (
     create_expenses_submitted_summary,
     currently_available_expense_categories,
-    get_current_month_expenses_breakdown,
-    get_current_month_total_spendings,
-    get_month_logs,
+    logs_from_selected_date,
     get_spendings_dates,
     save_category_expense_available_on_db,
     save_category_expense_not_available_on_db,
+    selected_date_expenses_breakdown,
+    selected_date_total_spendings,
 )
 
 app = FastAPI()
@@ -40,7 +40,9 @@ templates = Jinja2Templates(directory=path)
 
 @app.post("/submit-expenses")
 async def submit_expenses(
-    expenses: Expenses, db: Session = Depends(get_db), operation: str = None
+    expenses: Expenses,
+    db: Session = Depends(get_db),
+    operation: str = None,
 ):
 
     non_empty_expenses = expenses.dict(exclude_none=True)
@@ -77,18 +79,28 @@ async def submit_expenses(
     return {"message": msg}
 
 
-@app.get("/total-spendings/current-month")
-async def homepage(request: Request, db: Session = Depends(get_db)):
+@app.get("/get-total-spendings")
+async def get_total_spendings(db: Session = Depends(get_db), selected_date: str = None):
 
-    total_month_expense = get_current_month_total_spendings(db=db)
+    selected_date_split = selected_date.split("-")
+    month = int(selected_date_split[0])
+    year = int(selected_date_split[1])
 
-    return {"total_spent": total_month_expense}
+    total_month_expense = selected_date_total_spendings(db=db, month=month, year=year)
+
+    return total_month_expense
 
 
-@app.get("/current-month-expenses-breakdown")
-async def current_month_expenses_breakdown(db: Session = Depends(get_db)):
+@app.get("/get-expenses-breakdown")
+async def get_expenses_breakdown(
+    db: Session = Depends(get_db), selected_date: str = None
+):
 
-    expenses_breakdown = get_current_month_expenses_breakdown(db=db)
+    selected_date_split = selected_date.split("-")
+    month = int(selected_date_split[0])
+    year = int(selected_date_split[1])
+
+    expenses_breakdown = selected_date_expenses_breakdown(db=db, month=month, year=year)
 
     return expenses_breakdown
 
@@ -101,8 +113,13 @@ async def spendings_dates(db: Session = Depends(get_db)):
 
 
 @app.get("/get-logs")
-async def get_logs(db: Session = Depends(get_db)):
-    logs = get_month_logs(db=db)
+async def get_logs(db: Session = Depends(get_db), selected_date: str = None):
+
+    selected_date_split = selected_date.split("-")
+    month = int(selected_date_split[0])
+    year = int(selected_date_split[1])
+
+    logs = logs_from_selected_date(db=db, month=month, year=year)
 
     return logs
 

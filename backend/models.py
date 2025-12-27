@@ -30,4 +30,6 @@ class ExpensesLogs(Base):
     expense_type = Column(TEXT, nullable=False)
     expense_amount = Column(NUMERIC, nullable=False)
     expense_category = Column(TEXT, nullable=False)
-    date_of_entry = Column(DATE, nullable=False)
+    day_of_entry = Column(NUMERIC, nullable=False)
+    month_of_entry = Column(NUMERIC, nullable=False)
+    year_of_entry = Column(NUMERIC, nullable=False)

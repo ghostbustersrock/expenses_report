@@ -9,7 +9,7 @@ function ExpensesLogs({ selectedDate, refreshTrigger }) {
     useEffect(() => {
         const fetchMonthExpenses = async () => {
             try {
-                const response = await api.get("/get-logs")
+                const response = await api.get(`/get-logs?selected_date=${selectedDate}`)
                 setLogs(response.data)
             } catch (error) {
                 alert("Error fetching expenses:", err)
@@ -18,7 +18,22 @@ function ExpensesLogs({ selectedDate, refreshTrigger }) {
 
         fetchMonthExpenses()
 
-    }, [refreshTrigger])
+    }, [refreshTrigger, selectedDate])
+
+
+    function constructLogMessage(log) {
+
+        const dateText = `${log["year"]}-${log["month"]}-${log["day"]}`
+
+        const operationType = log["operation"]
+        const operationClass = `log-${operationType.toLowerCase()}`
+
+        return (
+            <span className="log">
+                {dateText} <span className={operationClass}>{operationType}</span> £{log["amount"]} in {log["category"]}
+            </span>
+        )
+    }
 
 
     return (
@@ -30,9 +45,7 @@ function ExpensesLogs({ selectedDate, refreshTrigger }) {
                 {
                     logs && logs.map((log) => (
                         <div key={log["id"]} className="log-container">
-                            <span className="log">
-                                {log["date"]} <span className={`log-${log["type"].toLowerCase()}`}>{log["type"]}</span> £{log["amount"]} in {log["category"]}
-                            </span>
+                            {constructLogMessage(log)}
                             <hr className="log-line-break" />
                         </div>
                     ))

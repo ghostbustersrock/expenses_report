@@ -13,7 +13,7 @@ function MonthlyBreakdown({ selectedDate, refreshTrigger }) {
     useEffect(() => {
         const fetchExpensesBreakdown = async () => {
             try {
-                const response = await api.get("/current-month-expenses-breakdown")
+                const response = await api.get(`/get-expenses-breakdown?selected_date=${selectedDate}`)
                 setData(response.data)
             } catch (err) {
                 alert("Error fetching expenses:", err)
@@ -25,21 +25,20 @@ function MonthlyBreakdown({ selectedDate, refreshTrigger }) {
 
         fetchExpensesBreakdown()
 
-    }, [refreshTrigger])
+    }, [refreshTrigger, selectedDate])
 
     useEffect(() => {
         const fetchSpendings = async () => {
             try {
-                const response = await api.get("/total-spendings/current-month")
-                setTotalSpendings(response.data.total_spent)
+                const response = await api.get(`/get-total-spendings?selected_date=${selectedDate}`)
+                setTotalSpendings(response.data)
             } catch (error) {
                 alert("Error fetching spendings:", error)
-                // setTotalSpendings("Error")
             }
         }
 
         fetchSpendings()
-    }, [refreshTrigger])
+    }, [refreshTrigger, selectedDate])
 
 
     const savedAmount = monthlySalary == null ? null : Number(monthlySalary) - totalSpendings
