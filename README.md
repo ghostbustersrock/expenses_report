@@ -17,3 +17,25 @@ Each month has its own excel sheet with its respective spendings. The algorithms
 
 # How to run
 You can either use Anaconda to run the Jupyter Notebook, or drag and rop the **spendings** folder into the VScode IDE, select the Python environment and simply run the notebook.
+
+
+
+DEPENDENCIES TO DOWNLOAD from package.json
+
+```
+{
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.6",
+    "@mui/x-charts": "^8.23.0",
+    "axios": "^1.8.4"
+  }
+}
+```
+
+npm install @mui/x-charts
+npm install @mui/material @emotion/react @emotion/styled
+
+
+TODO: write the new README, how to setup the app, how to run it, how to use it, etc.

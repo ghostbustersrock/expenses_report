@@ -273,4 +273,98 @@ def logs_from_selected_date(db: Session, month: int, year: int) -> list[dict] | 
                 }
             )
 
-    return logs
+    return logs if logs else None
+
+
+def total_spendings_per_month(db: Session) -> dict | None:
+    rows = (
+        db.query(
+            md.Expenses.expense_year,
+            md.Expenses.expense_month,
+            func.sum(md.Expenses.expense_cost).label("expenses_total"),
+        )
+        .group_by(md.Expenses.expense_year, md.Expenses.expense_month)
+        .order_by(md.Expenses.expense_year, md.Expenses.expense_month)
+        .all()
+    )
+
+    spendings_data = {}
+
+    if rows:
+
+        dates = []
+        expenses_total = []
+
+        for year, month, total in rows:
+            dates.append(f"{month}-{year}")
+            expenses_total.append(total)
+
+        spendings_data = {
+            "dates": dates,
+            "expenses_total": expenses_total,
+        }
+
+    return spendings_data if spendings_data else None
+
+
+def total_category_spendings_per_month(db: Session, category: str) -> dict | None:
+    rows = (
+        db.query(
+            md.Expenses.expense_year,
+            md.Expenses.expense_month,
+            func.sum(md.Expenses.expense_cost).label("expenses_total"),
+        )
+        .filter(md.Expenses.expense_category_id == EXPENSES_CATEGORIES[category])
+        .group_by(md.Expenses.expense_year, md.Expenses.expense_month)
+        .order_by(md.Expenses.expense_year, md.Expenses.expense_month)
+        .all()
+    )
+
+    spendings_data = {}
+
+    if rows:
+
+        dates = []
+        expenses_total = []
+
+        for year, month, total in rows:
+            dates.append(f"{month}-{year}")
+            expenses_total.append(total)
+
+        spendings_data = {
+            "dates": dates,
+            "expenses_total": expenses_total,
+        }
+
+    return spendings_data if spendings_data else None
+
+
+def all_time_categories_spendings(db: Session) -> dict | None:
+
+    expenses_total = func.coalesce(func.sum(md.Expenses.expense_cost), 0).label(
+        "expenses_total"
+    )
+
+    rows = (
+        db.query(md.ExpensesCategories.category_type, expenses_total)
+        .outerjoin(
+            md.Expenses,
+            md.Expenses.expense_category_id == md.ExpensesCategories.category_id,
+        )
+        .group_by(md.ExpensesCategories.category_type)
+        .order_by(expenses_total.desc())
+    ).all()
+
+    data = {
+        "categories": [],
+        "expenses_total": [],
+    }
+
+    if rows:
+        for row in rows:
+            data["categories"].append(row[0])
+            data["expenses_total"].append(float(row[1]))
+
+    all_zeros = all(expense == 0 for expense in data["expenses_total"])
+
+    return None if all_zeros else data
