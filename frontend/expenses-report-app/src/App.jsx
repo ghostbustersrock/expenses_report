@@ -3,12 +3,14 @@ import monthsFormatting from "./constants"
 import { useState, useEffect } from 'react'
 
 // Components imports ----------------------------------------
+import ExpensesCharts from "./custom-components/ExpensesCharts"
 import ExpensesLogs from "./custom-components/ExpensesLogs"
 import InputExpenses from "./custom-components/InputExpenses"
 import MonthlyBreakdown from "./custom-components/MonthlyBreakdown"
 
 // Components CSS imports --------------------------------------
 import './App.css'
+import "./custom-components-css/ExpensesCharts.css"
 import "./custom-components-css/ExpensesLogs.css"
 import "./custom-components-css/InputExpenses.css"
 import "./custom-components-css/MonthlyBreakdown.css"
@@ -96,6 +98,7 @@ function App() {
             <ExpensesLogs selectedDate={selectedDate} refreshTrigger={refreshMonthSpendings} />
           </div>
         </div>
+        <ExpensesCharts refreshTrigger={refreshMonthSpendings} />
       </div >
     </>
   )

@@ -21,3 +21,18 @@ export default function monthsFormatting(selectedDate) {
 
     return `${datesMapping[month]} ${year}`
 }
+
+
+export const expenseCategories = [
+    "Transportation",
+    "Rent",
+    "Bills",
+    "Subscriptions",
+    "Groceries",
+    "Shopping",
+    "Eating out",
+    "Leisure",
+    "Drinks",
+    "Holidays",
+    "Other",
+]

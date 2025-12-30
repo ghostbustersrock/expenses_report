@@ -43,12 +43,16 @@ function ExpensesLogs({ selectedDate, refreshTrigger }) {
             </div>
             <div className="logs-parent-container">
                 {
-                    logs && logs.map((log) => (
+                    logs ? logs.map((log) => (
                         <div key={log["id"]} className="log-container">
                             {constructLogMessage(log)}
                             <hr className="log-line-break" />
                         </div>
-                    ))
+                    )) : (
+                        <div className="no-logs-container">
+                            No logs found
+                        </div>
+                    )
                 }
             </div>
         </div >
