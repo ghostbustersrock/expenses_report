@@ -1,0 +1,58 @@
+{
+  "hash": "57c367f3",
+  "configHash": "87b57107",
+  "lockfileHash": "72013889",
+  "browserHash": "cc026483",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "2fbdf0e2",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "058d4317",
+      "needsInterop": true
+    },
+    "axios": {
+      "src": "../../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "527e8bf7",
+      "needsInterop": false
+    },
+    "@mui/material/Box": {
+      "src": "../../../node_modules/@mui/material/esm/Box/index.js",
+      "file": "@mui_material_Box.js",
+      "fileHash": "fe32bcc5",
+      "needsInterop": false
+    },
+    "@mui/x-charts/LineChart": {
+      "src": "../../../node_modules/@mui/x-charts/esm/LineChart/index.js",
+      "file": "@mui_x-charts_LineChart.js",
+      "fileHash": "b784eca2",
+      "needsInterop": false
+    },
+    "@mui/x-charts/BarChart": {
+      "src": "../../../node_modules/@mui/x-charts/esm/BarChart/index.js",
+      "file": "@mui_x-charts_BarChart.js",
+      "fileHash": "ff7540ce",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-6GAV2S6I": {
+      "file": "chunk-6GAV2S6I.js"
+    },
+    "chunk-JT4MR2Q4": {
+      "file": "chunk-JT4MR2Q4.js"
+    },
+    "chunk-7IJQBEBZ": {
+      "file": "chunk-7IJQBEBZ.js"
+    },
+    "chunk-DC5AMYBS": {
+      "file": "chunk-DC5AMYBS.js"
+    }
+  }
+}
