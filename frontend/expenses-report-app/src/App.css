@@ -1,0 +1,60 @@
+#root {
+  max-width: 1280px;
+  /* margin: 0 auto; */
+  padding: 2rem;
+  text-align: center;
+}
+
+.card {
+  padding: 2em;
+}
+
+.main-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.date-selection-container {
+  display: flex;
+  font-size: 30px;
+}
+
+.date-selection-dropdown {
+  background: unset;
+  color: black;
+  border: unset;
+  border-bottom: 1px solid;
+  cursor: pointer;
+}
+
+.show-input-expenses-container {
+  display: flex;
+}
+
+.operations-components-containers {
+  display: flex;
+  border: 1px solid rgba(169, 169, 169, 0.3);
+  border-radius: 10px;
+  padding: 30px;
+  min-height: 600px;
+  max-height: 600px;
+  align-items: center;
+}
+
+.expenses-summaries-components {
+  display: flex;
+}
+
+.app-button {
+  font-size: 14px;
+  width: 100%;
+}
+
+.content-separator {
+  margin: 0 20px;
+  width: 1px;
+  height: 500px;
+  background: gray;
+  opacity: 0.3;
+}

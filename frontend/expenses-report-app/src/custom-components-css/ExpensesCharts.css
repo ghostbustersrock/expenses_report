@@ -1,0 +1,36 @@
+.total-spendings-per-month-container,
+.category-monthly-spendings-container,
+.all-total-spendings-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 20px;
+}
+
+
+.category-selection-dropdown {
+    background: unset;
+    color: black;
+    border: unset;
+    border-bottom: 1px solid;
+    cursor: pointer;
+}
+
+.charts-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+}
+
+.spendings-per-month-chart {
+    border: 1px solid rgba(169, 169, 169, 0.3);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.bar-chart-box-component,
+.line-chart-box-component {
+    height: 500px;
+}

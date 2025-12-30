@@ -1,0 +1,70 @@
+.logs-component {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 200px;
+}
+
+.logs-component-header {
+    display: flex;
+}
+
+.logs-parent-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 12px;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 200px;
+    max-height: 200px;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    padding-left: 5px;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.log-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.log-line-break {
+    width: 100%;
+    margin: unset;
+}
+
+.log {
+    white-space: nowrap;
+}
+
+.log-added {
+    color: green;
+}
+
+.log-removed {
+    color: red;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.no-logs-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
