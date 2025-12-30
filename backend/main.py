@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import get_db
 from schemas import Expenses
 from utils import (
+    all_time_categories_spendings,
     create_expenses_submitted_summary,
     currently_available_expense_categories,
     logs_from_selected_date,
@@ -20,6 +21,8 @@ from utils import (
     save_category_expense_not_available_on_db,
     selected_date_expenses_breakdown,
     selected_date_total_spendings,
+    total_category_spendings_per_month,
+    total_spendings_per_month,
 )
 
 app = FastAPI()
@@ -124,10 +127,30 @@ async def get_logs(db: Session = Depends(get_db), selected_date: str = None):
     return logs
 
 
-# TODO: endpoint to delete all current inputs for the month
+@app.get("/get-total-spendings-per-month")
+async def get_total_spendings_per_month(db: Session = Depends(get_db)):
 
-# TODO: later on introduce a feature where when selecting a specific
-# past month, we pass this argument to all the API endpoints,
-# so any operations we do take place on the currently selected month.
-# This is in the eventuality that we need to modify a past month. The default
-# month is the current one we are in, if nothing is selected.
+    spendings_per_month = total_spendings_per_month(db=db)
+
+    return spendings_per_month
+
+
+@app.get("/get-category-spendings-per-month")
+async def get_total_spendings_per_month(
+    db: Session = Depends(get_db), category: str = None
+):
+
+    category_spendings = total_category_spendings_per_month(db=db, category=category)
+
+    return category_spendings
+
+
+@app.get("/get-all-time-categories-spendings")
+async def get_all_time_categories_spendings(db: Session = Depends(get_db)):
+
+    all_categories_spendings = all_time_categories_spendings(db=db)
+
+    return all_categories_spendings
+
+
+# TODO: endpoint to delete all current inputs for the month
